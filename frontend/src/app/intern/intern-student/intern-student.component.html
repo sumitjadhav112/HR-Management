@@ -1,0 +1,108 @@
+<div class="container">
+    <button class="back-button" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  
+    <h1 class="title">Interns Management</h1>
+  
+    <button class="add-button" (click)="showDialog()">
+      <i class="fas fa-plus"></i> Add New Intern
+    </button>
+  
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search interns..." [(ngModel)]="searchTerm" (input)="searchInterns()">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  
+    <div class="table-container">
+      <table class="intern-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Time Period</th>
+            <th>Total Amount</th>
+            <th>Start Date</th>
+            <th>Paid Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let intern of filteredInterns" class="intern-row">
+            <td>{{intern.name}}</td>
+            <td>{{intern.time_period}}</td>
+            <td>{{intern.total_Amount | currency}}</td>
+            <td>{{intern.startDate | date}}</td>
+            <td>{{intern.paidAmount | currency}}</td>
+            <td>
+              <span class="status-badge" [class.active]="intern.status">
+                {{intern.status ? 'Active' : 'Inactive'}}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="action-button edit-button" (click)="editIntern(intern)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-button delete-button" (click)="confirmDeactivation(intern.id)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="filteredInterns.length === 0" class="no-interns-message">
+        No interns found.
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal" [class.show]="displayDialog">
+    <div class="modal-content">
+      <h2>{{isEdit ? 'Edit' : 'Add'}} Intern</h2>
+      <form (ngSubmit)="saveIntern()" #internForm="ngForm">
+        <div class="form-group">
+          <input id="name" type="text" [(ngModel)]="newIntern.name" name="name" required>
+          <label for="name">Name</label>
+        </div>
+        <div class="form-group">
+          <input id="time_period" type="text" [(ngModel)]="newIntern.time_period" name="time_period" required>
+          <label for="time_period">Time Period</label>
+        </div>
+        <div class="form-group">
+          <input id="total_Amount" type="number" [(ngModel)]="newIntern.total_Amount" name="total_Amount" required>
+          <label for="total_Amount">Total Amount</label>
+        </div>
+        <div class="form-group">
+          <input id="startDate" type="date" [(ngModel)]="newIntern.startDate" name="startDate" required>
+          <label for="startDate">Start Date</label>
+        </div>
+        <div class="form-group">
+          <input id="paidAmount" type="number" [(ngModel)]="newIntern.paidAmount" name="paidAmount" required>
+          <label for="paidAmount">Paid Amount</label>
+        </div>
+        <div class="form-group checkbox">
+          <input id="status" type="checkbox" [(ngModel)]="newIntern.status" name="status">
+          <label for="status">Active</label>
+        </div>
+        <div class="button-group">
+          <button type="button" class="cancel-button" (click)="hideDialog()">Cancel</button>
+          <button type="submit" class="save-button">{{isEdit ? 'Update' : 'Save'}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- ---------------for alert --------------------- -->
+
+  <div class="modal confirmation-modal" [class.show]="showConfirmation">
+    <div class="modal-content">
+      <h2>Confirm Deactivation</h2>
+      <p>Are you sure you want to deactivate this intern?</p>
+      <div class="button-group">
+        <button class="cancel-button" (click)="cancelDeactivation()">Cancel</button>
+        <button class="confirm-button" (click)="proceedDeactivation()">Confirm</button>
+      </div>
+    </div>
+  </div>

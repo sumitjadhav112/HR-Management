@@ -1,0 +1,357 @@
+<div class="client-showcase">
+  <div class="client-showcase">
+    <div class="back-button" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i> Back
+    </div>
+    <h1>Client Portfolio</h1>
+
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchClients()"
+        placeholder="Search clients..."
+      />
+    </div>
+
+    <div class="client-list" *ngIf="filteredClients.length > 0; else noClients">
+      <div *ngFor="let client of filteredClients" class="client-item">
+        <div class="client-header">
+          <div
+            class="client-initials"
+            [style.background-color]="getClientColor(client.client_id)"
+          >
+            {{ getInitials(client.client_name) }}
+          </div>
+          <div class="client-main-info">
+            <h2>{{ client.client_name }}</h2>
+            <p class="client-id">ID: {{ client.client_id }}</p>
+          </div>
+          <div class="client-status" [ngClass]="getClientStatusClass(client)">
+            {{ getClientStatusText(client) }}
+          </div>
+          <!-- <div *ngIf="isAllInstallmentsPaid(client)" class="all-paid-badge">
+            All Paid
+          </div> -->
+        </div>
+        <div class="client-details">
+          <div class="detail-group">
+            <div class="detail-item">
+              <span class="detail-label">Email:</span>
+              <span class="detail-value">{{ client.client_email }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Phone:</span>
+              <span class="detail-value">{{ client.mobile_number }}</span>
+            </div>
+          </div>
+          <div class="detail-group">
+            <div class="detail-item">
+              <span class="detail-label">Project:</span>
+              <span class="detail-value">{{ client.projectDetails }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Timeline:</span>
+              <span class="detail-value">{{ client.timeline }}</span>
+            </div>
+          </div>
+          <div class="detail-group">
+            <div class="detail-item">
+              <span class="detail-label">Total Amount:</span>
+              <span class="detail-value"
+                >₹{{ client.totalAmount | number : "1.2-2" }}</span
+              >
+            </div>
+          </div>
+          <div class="detail-group">
+            <div class="detail-item">
+              <span class="detail-label">Discount:</span>
+              <span class="detail-value"
+                >₹{{ client.total_discount | number : "1.2-2" }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="client-actions">
+          <button
+            class="btn-view-installments"
+            (click)="viewInstallments(client)"
+          >
+            View Installments
+          </button>
+          <button
+            style="margin-left: 45px"
+            class="btn-view-installments"
+            (click)="editClient(client)"
+          >
+            Edit Client
+          </button>
+        </div>
+        <div class="client-actions"></div>
+      </div>
+    </div>
+    <ng-template #noClients>
+      <p>No clients found.</p>
+    </ng-template>
+  </div>
+
+  <p-dialog
+  header="Installment Details"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [draggable]="true"
+  [resizable]="true"
+  [maximizable]="true"
+>
+  <div
+    *ngIf="installmentArray && installmentArray.length > 0; else noInstallments"
+    class="installment-details"
+  >
+    <p-table [value]="installmentArray" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Installment ID</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Mark as Paid</th>
+          <th>Edit Installment</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-installment let-i="index">
+        <tr>
+          <td>{{ installment.installment_id }}</td>
+          <td>₹{{ installment.amount | number: '1.2-2' }}</td>
+          <td>{{ installment.dueDate | date: 'mediumDate' }}</td>
+          <td>
+            <p-tag
+              [severity]="installment.status === 'PAID' ? 'success' : 'danger'"
+              [value]="installment.status === 'PAID' ? 'Paid' : 'Pending'"
+            ></p-tag>
+          </td>
+          <td>
+            <p-checkbox
+              [(ngModel)]="installment.status"
+              [binary]="true"
+              [trueValue]="'PAID'"
+              [falseValue]="'PENDING'"
+              (onChange)="markAsPaid(installment.installment_id, installment.status)"
+              [disabled]="installment.status === 'PAID'"
+            ></p-checkbox>
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              label="Edit"
+              icon="pi pi-pencil"
+              class="p-button-text"
+              (click)="editInstallment(installment)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <ng-template #noInstallments>
+    <p>No installments found for this client.</p>
+    <button class="add-installment-button" (click)="navigateToAddInstallment()">
+      <span class="button-text">Add Installment</span>
+      <span class="button-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </span>
+    </button>
+  </ng-template>
+
+  <div *ngIf="installmentArray && installmentArray.length > 0" class="total-amount">
+    <h3>
+      Total Addition of Installments:
+      <span>₹{{ totalAmount | number: '1.2-2' }}</span>
+    </h3>
+    <h3>
+      Projects Total Amount:
+      <span>₹{{ projectAmount | number: '1.2-2' }}</span>
+    </h3>
+  </div>
+
+  <p-footer>
+    <button
+      pButton
+      *ngIf="anyInstallmentPaid"
+      type="button"
+      label="Download Invoice"
+      icon="pi pi-download"
+      class="p-button-success"
+      (click)="viewInvoiceForClient(installmentArray[0].client_id)"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Close"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="checkAndCloseDialog()"
+    ></button>
+  </p-footer>
+</p-dialog>
+
+
+  <p-confirmDialog
+    [style]="{ width: '450px' }"
+    [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"
+  ></p-confirmDialog>
+  <p-toast></p-toast>
+</div>
+<!-- 
+
+<-- ... For Edit Intallments ... -->
+
+<p-dialog
+  header="Edit Installment"
+  [(visible)]="editInstallmentVisible"
+  [style]="{ width: '30vw' }"
+  [modal]="true"
+>
+
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="amount">Amount</label>
+      <input
+        id="amount"
+        type="number"
+        pInputText
+        [(ngModel)]="editInstallmentData.amount"
+      />
+    </div>
+    <div class="p-field">
+      <label for="amount">Due Date </label>
+      <input
+        id="date"
+        type="date"
+        pInputText
+        [(ngModel)]="editInstallmentData.dueDate"
+      />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="editInstallmentVisible = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveEditedInstallment()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<!-- ... for update the client details  ... -->
+
+<!-- Add this at the end of your existing template -->
+<p-dialog
+  header="Edit Client"
+  [(visible)]="editClientVisible"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+>
+  <div class="p-fluid" *ngIf="editClientData">
+    <div class="p-field">
+      <label for="clientName">Client Name</label>
+      <input
+        id="clientName"
+        type="text"
+        pInputText
+        [(ngModel)]="editClientData.client_name"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientEmail">Email</label>
+      <input
+        id="clientEmail"
+        type="email"
+        pInputText
+        [(ngModel)]="editClientData.client_email"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientPhone">Phone</label>
+      <input
+        id="clientPhone"
+        type="tel"
+        pInputText
+        [(ngModel)]="editClientData.mobile_number"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientProject">Project</label>
+      <input
+        id="clientProject"
+        type="text"
+        pInputText
+        [(ngModel)]="editClientData.projectDetails"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientTimeline">Project Start date</label>
+      <input
+        id="clientTimeline"
+        type="datetime-local"
+        pInputText
+        [(ngModel)]="editClientData.startDate"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientTimeline"> Project Due Date</label>
+      <input
+        id="clientTimeline"
+        type="datetime-local"
+        pInputText
+        [(ngModel)]="editClientData.timeline"
+      />
+    </div>
+    <div class="p-field">
+      <label for="clientAmount">Total Amount</label>
+      <input
+        id="clientAmount"
+        type="number"
+        pInputText
+        [(ngModel)]="editClientData.totalAmount"
+        [disabled]="true"
+        class="disabled-input"
+      />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="editClientVisible = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveEditedClient()"
+    ></button>
+  </ng-template>
+</p-dialog>

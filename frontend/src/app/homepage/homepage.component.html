@@ -1,0 +1,83 @@
+<div class="admin-home-container">
+  <div class="header">
+    <h1>Admin Dashboard</h1>
+    <div class="header-actions">
+      <div class="notification-icon" (click)="toggleNotifications()" [ngClass]="{'has-unread': notificationCount > 0}">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" *ngIf="notificationCount > 0">{{notificationCount}}</span>
+      </div>
+      <button class="logout-btn" (click)="toggleLogoutConfirm()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </div>
+  <div class="card-container">
+    <div class="card" routerLink="/CLientRegister">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-user-plus"></i></div>
+        <h2>Add Client</h2>
+        <p>Add new clients to the system</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/view-clients">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <h2>View All Clients</h2>
+        <p>View and manage all clients</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/add-expense">
+      <div class="card-content">
+        <div class="icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        <h2>Add Expense</h2>
+        <p>Add new expenses</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/view-expenses">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <h2>View Expenses</h2>
+        <p>View and manage all expenses</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/revenue">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-coins"></i></div>
+        <h2>Revenue</h2>
+        <p>View Or add the new Revenue</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/employees">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <h2>Employees</h2>
+        <p>Employees management</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/intern-student">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-user-graduate"></i></div>
+        <h2>Interns</h2>
+        <p>Student management</p>
+      </div>
+    </div>
+    <div class="card" routerLink="/summary">
+      <div class="card-content">
+        <div class="icon"><i class="fas fa-file-alt"></i></div>
+        <h2>Get Summary</h2>
+        <p>Get a summary of all activities</p>
+      </div>
+    </div>
+  </div>
+  <div class="confirm-overlay" *ngIf="showLogoutConfirm">
+    <div class="confirm-dialog">
+      <h2>Confirm Logout</h2>
+      <p>Are you sure you want to logout?</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn" (click)="logout()">Yes, Logout</button>
+        <button class="cancel-btn" (click)="toggleLogoutConfirm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

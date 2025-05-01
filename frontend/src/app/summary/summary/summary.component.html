@@ -1,0 +1,146 @@
+<div class="summary-container">
+  <div class="back-arrow" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i> Back
+  </div>
+  
+  <h2>Company Monthly Summary for {{ year }}</h2>
+  
+  <div class="year-selector">
+    <label for="year">Select Year:</label>
+    <input type="number" id="year" [(ngModel)]="year" (change)="onYearChange()">
+  </div>
+  
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading data...</p>
+  </div>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="monthlySummary && !loading && !error" class="summary-content" [@tableAnimation]>
+    <table>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Total Income</th>
+          <th>Total Expenses</th>
+          <th>Total Revenue</th>
+          <th>Employee salaries</th>
+          <th>Net Profit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of monthlySummary; let i = index" 
+            (click)="getMonthlyDetails(i + 1)" 
+            class="clickable-row">
+          <td>{{ getMonthName(i + 1) }}</td>
+          <td>{{ data.totalIncome | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td>{{ data.totalExpenses | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td>{{ data.totalRevenue | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td>{{data.totalEmployeeSalaries}}</td>
+          <td [ngClass]="{'positive': data.netProfit > 0, 'negative': data.netProfit < 0}">
+            {{ data.netProfit | currency:'INR':'symbol':'1.0-0' }}
+          </td>
+          <!-- <td>{{ data.totalEmployeeSalaries | currency:'INR':'symbol':'1.0-</td> -->
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" *ngIf="showModal" [@modalAnimation]>
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h3>Details for {{ getMonthName(selectedMonth) }} {{ year }}</h3>
+    
+    <div class="details-section">
+      <h4>Invoices</h4>
+      <table *ngIf="monthlyDetails?.invoices?.length; else noInvoices">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Remaining</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let invoice of monthlyDetails?.invoices" [@listAnimation]>
+            <td data-label="ID">{{ invoice.invoice_id }}</td>
+            <td data-label="Client">{{ invoice.client.client_name }}</td>
+            <td data-label="Total">{{ invoice.totalAmount | currency:'INR':'symbol':'1.0-0' }}</td>
+            <td data-label="Paid">{{ invoice.paidAmount | currency:'INR':'symbol':'1.0-0' }}</td>
+            <td data-label="Remaining">{{ invoice.remainingAmount | currency:'INR':'symbol':'1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="total-row" *ngIf="monthlyDetails?.invoices?.length">
+        <span>Total Invoices:</span>
+        <span>{{ getTotalInvoices() | currency:'INR':'symbol':'1.0-0' }}</span>
+      </div>
+      <ng-template #noInvoices>
+        <p class="no-data">No invoice data available for this month.</p>
+      </ng-template>
+    </div>
+    
+    <div class="details-section">
+      <h4>Expenses</h4>
+      <table *ngIf="monthlyDetails?.expenses?.length; else noExpenses">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let expense of monthlyDetails?.expenses" [@listAnimation]>
+            <td data-label="ID">{{ expense.id }}</td>
+            <td data-label="Amount">{{ expense.amount | currency:'INR':'symbol':'1.0-0' }}</td>
+            <td data-label="Date">{{ expense.date | date:'shortDate' }}</td>
+            <td data-label="Type">{{ expense.type }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="total-row" *ngIf="monthlyDetails?.expenses?.length">
+        <span>Total Expenses:</span>
+        <span>{{ getTotalExpenses() | currency:'INR':'symbol':'1.0-0' }}</span>
+      </div>
+      <ng-template #noExpenses>
+        <p class="no-data">No expense data available for this month.</p>
+      </ng-template>
+    </div>
+    
+    <div class="details-section">
+      <h4>Revenues</h4>
+      <table *ngIf="monthlyDetails?.revenues?.length; else noRevenues">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let revenue of monthlyDetails?.revenues" [@listAnimation]>
+            <td data-label="ID">{{ revenue.id }}</td>
+            <td data-label="Amount">{{ revenue.amount | currency:'INR':'symbol':'1.0-0' }}</td>
+            <td data-label="Date">{{ revenue.date | date:'shortDate' }}</td>
+            <td data-label="Description">{{ revenue.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="total-row" *ngIf="monthlyDetails?.revenues?.length">
+        <span>Total Revenues:</span>
+        <span>{{ getTotalRevenues() | currency:'INR':'symbol':'1.0-0' }}</span>
+      </div>
+      <ng-template #noRevenues>
+        <p class="no-data">No revenue data available for this month.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

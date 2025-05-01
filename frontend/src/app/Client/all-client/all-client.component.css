@@ -1,0 +1,580 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.client-showcase {
+  font-family: 'Inter', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.client-status {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+.client-status.all-paid {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.client-status.pending {
+  background-color: #ffc107;
+  color: #000000;
+}
+
+h1 {
+  text-align: center;
+  color: #212529;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.client-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.client-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.client-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f1f3f5;
+}
+
+.client-initials {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-right: 1rem;
+}
+
+.client-main-info {
+  flex-grow: 1;
+
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #343a40;
+  }
+
+  .client-id {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin: 0;
+  }
+}
+
+.client-status {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+
+  &.active {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  &.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+}
+
+.client-details {
+  padding: 1.5rem;
+}
+
+.detail-group {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.detail-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  color: #212529;
+}
+
+.client-actions {
+  padding: 1rem 1.1rem;
+  background-color: #f8f9fa;
+  text-align: right;
+}
+
+.btn-view-installments {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+
+.search-container {
+  margin-bottom: 2rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-top: 2rem;
+}
+
+/* ------------------------ for back button */
+.client-showcase {
+    position: relative;
+    padding: 20px;
+  }
+  
+  .back-button {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    color: rgb(16, 16, 16);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button i {
+    margin-right: 5px;
+    color: rgb(104, 103, 103);
+  }
+  
+  .back-button:hover {
+    background: #c5c6c7;
+  }
+  
+  .client-showcase h1 {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+
+
+  /* ================================ for dialouge ========================== */
+
+  :host ::ng-deep {
+    .p-dialog {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+  
+    .p-dialog .p-dialog-header {
+      background: linear-gradient(135deg, #3f51b5, #2196f3);
+      color: #ffffff;
+      padding: 1.5rem 2rem;
+      border-bottom: none;
+    }
+  
+    .p-dialog .p-dialog-title {
+      font-weight: 600;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+  
+    .p-dialog .p-dialog-header-icon {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      padding: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+  
+    .p-dialog .p-dialog-header-icon:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  
+    .p-dialog .p-dialog-content {
+      padding: 2rem;
+      background-color: #ffffff;
+    }
+  
+    .p-dialog .p-dialog-footer {
+      background-color: #f8f9fa;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #e9ecef;
+    }
+  
+    .p-confirm-dialog .p-confirm-dialog-message {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #4a4a4a;
+      margin-bottom: 1.5rem;
+    }
+  
+    .p-confirm-dialog .p-confirm-dialog-icon {
+      font-size: 2rem;
+      color: #3f51b5;
+      margin-right: 1rem;
+    }
+  
+    .p-dialog .p-button {
+      margin: 0 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+  
+    .p-dialog .p-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .p-dialog .p-button.p-button-outlined {
+      border: 2px solid;
+    }
+  
+    .p-dialog .p-button.p-button-secondary {
+      background-color: #f8f9fa;
+      color: #4a4a4a;
+      border-color: #ced4da;
+    }
+  
+    .p-dialog .p-button.p-button-secondary:hover {
+      background-color: #e9ecef;
+      border-color: #adb5bd;
+    }
+  
+    .p-dialog .p-button.p-button-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+  
+    .p-dialog .p-button.p-button-danger:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+  
+    /* Styles for the checkbox in the dialog */
+    .p-checkbox {
+      margin-right: 0.5rem;
+    }
+  
+    .p-checkbox .p-checkbox-box {
+      border: 2px solid #ced4da;
+      background-color: #ffffff;
+      width: 22px;
+      height: 22px;
+      transition: all 0.3s ease;
+    }
+  
+    .p-checkbox .p-checkbox-box.p-highlight {
+      border-color: #3f51b5;
+      background-color: #3f51b5;
+    }
+  
+    .p-checkbox .p-checkbox-box .p-checkbox-icon {
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+  
+    /* Styles for the table in the dialog */
+    .p-datatable .p-datatable-thead > tr > th {
+      background-color: #f8f9fa;
+      color: #495057;
+      font-weight: 600;
+      padding: 1rem;
+      border-bottom: 2px solid #e9ecef;
+    }
+  
+    .p-datatable .p-datatable-tbody > tr > td {
+      padding: 1rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+  
+    .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+  
+    /* Styles for the tag component */
+    .p-tag {
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+  
+    .p-tag.p-tag-success {
+      background-color: #28a745;
+      color: #ffffff;
+    }
+  
+    .p-tag.p-tag-danger {
+      background-color: #dc3545;
+      color: #ffffff;
+    }
+  }
+
+
+  /* --------------------edit  Dialouge*/
+
+  /* Dialog styles */
+:host ::ng-deep .p-dialog {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background-color: #f8f9fa;
+  color: #495057;
+  padding: 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 2rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1.5rem;
+  text-align: right;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Form styles */
+.p-fluid .p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-fluid .p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.p-fluid .p-field input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.p-fluid .p-field input:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+/* Button styles */
+:host ::ng-deep .p-button {
+  margin-left: 0.5rem;
+}
+
+:host ::ng-deep .p-button.p-button-text {
+  color: #495057;
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+  background-color: rgba(33, 150, 243, 0.04);
+  color: #2196F3;
+}
+
+:host ::ng-deep .p-button.p-button-text:focus {
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+  
+
+  
+
+
+/* -------------------------total amount and project amount ------------- */
+
+/* Styles for the total amount section */
+.total-amount {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.total-amount h3 {
+  margin: 0;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #495057;
+}
+
+.total-amount h3:first-child {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* Highlight the total amounts */
+.total-amount h3 span {
+  font-weight: bold;
+  color: #2196F3;
+}
+
+/* Add some space between the table and total amount section */
+.installment-details {
+  margin-bottom: 20px;
+}
+/* Style for when there are no installments */
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #6c757d;
+}
+
+.disabled-input {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+
+
+
+/* --------------------for add installment button ---------------------- */
+
+
+
+.add-installment-button {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-text {
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.button-icon {
+  position: absolute;
+  right: -30px;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.add-installment-button:hover {
+  background-color: #2980b9;
+  padding-right: 50px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.add-installment-button:hover .button-text {
+  transform: translateX(-10px);
+}
+
+.add-installment-button:hover .button-icon {
+  right: 20px;
+  opacity: 1;
+}
+
+.add-installment-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+  }
+}
+
+.add-installment-button:focus {
+  outline: none;
+  animation: pulse 1.5s infinite;
+}

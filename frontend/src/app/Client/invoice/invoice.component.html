@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genius Infotech - Invoice</title>
+</head>
+<body>
+  <button (click)="goBack()" class="home-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="home-icon">
+      <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+      <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+    </svg>
+    Home
+  </button>
+  <div class="invoice-container">
+    <div class="invoice-header">
+      <div class="company-info">
+        <img src="assets/logo.png" alt="Genius Infotech Logo" class="logo">
+        <p><strong>Genius Infotech</strong></p>
+        <p>Phone: +91 744 744 3741 | +91 902 296 6047</p>
+        <p>Email: geniusinfotech25@gmail.com</p>
+        <p>Website: geniusinfotech.org.in</p>
+        <p>BBC Complex, Paud Rd, Bhugaon, Bavdhan, Pune, Maharashtra- 412115</p>
+      </div>
+      <div class="invoice-info">
+        <h1>INVOICE</h1>
+        <p><strong>Invoice No:</strong> {{invoice[0].invoice_number}}</p>
+        <p><strong>Account No:</strong> 2402251795334337</p>
+        <p><strong>Date:</strong> {{invoice[0].invoiceDate | date:'mediumDate'}}</p>
+      </div>
+    </div>
+    
+    <div class="client-info">
+      <h2>Bill To:</h2>
+      <p>Name : <strong>{{invoice[0].clientName}}</strong></p>
+      <p>Contact: {{invoice[0].mobile_number}}</p>
+      <p>Email: {{invoice[0].client_email}}</p>
+      <p>Address: {{invoice[0].address}}</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Service Description</th>
+          <th>Price</th>
+          <th>Discount</th>
+          <th>Final Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <!-- <td>{{invoice[0].projectDetails}}</td> -->
+          <td>{{invoice[0].projectDetails}}</td>
+          <td>{{invoice[0].totalAmount | currency:'INR':'symbol':'1.2-2'}}</td>
+          <td>{{invoice[0].discount | currency:'INR':'symbol':'1.2-2'}}</td>
+          <td>{{invoice[0].fare | currency:'INR':'symbol':'1.2-2'}}</td>
+        </tr>
+        <!-- <tr class="total-row">
+          <td colspan="4">Total:</td>
+          <td>{{invoice[0].totalAmount | currency:'INR':'symbol':'1.2-2'}}</td>
+        </tr> -->
+        <tr>
+          <td colspan="4">Paid Amount:</td>
+          <td>{{invoice[0].paidAmount | currency:'INR':'symbol':'1.2-2'}}</td>
+        </tr>
+        <tr>
+          <td colspan="4">Pending Amount:</td>
+          <td>{{invoice[0].remainingAmount | currency:'INR':'symbol':'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="payment-installments">
+      <div class="payment-method">
+        <h2>Payment Details</h2>
+        <p><strong>Account No:</strong> 2402251795334337</p>
+        <p><strong>Account Name:</strong> Genius Infotech</p>
+        <p><strong>Branch Name:</strong> Kothrud, Pune</p>
+      </div>
+      
+      <div class="installments">
+        <h2>Installment Schedule</h2>
+        <p>Installment 1: {{installmentArray[0].amount | currency:'INR':'symbol':'1.2-2'}}</p>
+        <p>Installment 2: {{installmentArray[1].amount | currency:'INR':'symbol':'1.2-2'}}</p>
+        <p>Installment 3: {{installmentArray[2].amount | currency:'INR':'symbol':'1.2-2'}}</p>
+        <p>Installment 4: {{installmentArray[3].amount | currency:'INR':'symbol':'1.2-2'}}</p>
+      </div>
+    </div>
+    
+    <div class="invoice-footer">
+      <div class="terms-conditions">
+        <h2>Terms & Conditions</h2>
+        <ul>
+          <li>Payment is due within 5 days from the invoice date.</li>
+          <li>All services are provided as per our standard agreement terms.</li>
+          <li>Late payments may be subject to additional fees.</li>
+        </ul>
+        <p>Thank you for choosing Genius Infotech. We appreciate your business!</p>
+      </div>
+      <div class="signature-block">
+        <p><strong>Sambhaji Lande</strong><br>CEO, Genius Infotech</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="download-container">
+    <button class="download-btn" (click)="downloadPDF()">
+      Download PDF
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="download-icon">
+        <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+ <!-- <div class="register-container">
+  <div class="back-arrow" (click)="goBack()">
+    <svg viewBox="0 0 24 24" width="24" height="24">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+  </div> 
+  <h1>Register New Client</h1>
+  <form [formGroup]="ClientRegisterData" (ngSubmit)="onSubmitReactiveForm()">
+    <div class="form-group">
+      <input
+        type="text"
+        id="client_name"
+        maxlength="25"
+        placeholder="Enter Client Name"
+        formControlName="client_name"
+      />
+      <label for="client_name">CLIENT NAME</label>
+      <div *ngIf="isFieldInvalid('client_name')" class="error-message">
+        {{ getErrorMessage('client_name') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        id="mobile_number"
+        maxlength="10"
+        placeholder="Enter Mobile Number"
+        formControlName="mobile_number"
+      />
+      <label for="mobile_number">MOBILE NUMBER</label>
+      <div *ngIf="isFieldInvalid('mobile_number')" class="error-message">
+        {{ getErrorMessage('mobile_number') }}
+      </div>
+    </div>
+    <div class="form-group">
+      <input
+        type="text"
+        id="address"
+        placeholder="Enter Address"
+        formControlName="address"
+        maxlength="100"
+      />
+      <label for="client_address">ADDRESS</label>
+      <div *ngIf="isFieldInvalid('address')" class="error-message">
+        {{ getErrorMessage('address') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        id="projectDetails"
+        placeholder="Enter Project Details"
+        formControlName="projectDetails"
+      />
+      <label for="projectDetails">PROJECT DETAILS</label>
+      <div *ngIf="isFieldInvalid('projectDetails')" class="error-message">
+        {{ getErrorMessage('projectDetails') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="date"
+        id="timeline"
+        formControlName="timeline"
+        [min]="currentDate"
+      />
+      <label for="timeline">DATE</label>
+      <div *ngIf="isFieldInvalid('timeline')" class="error-message">
+        {{ getErrorMessage('timeline') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="number"
+        id="totalAmount"
+        placeholder="Enter Amount"
+        formControlName="totalAmount"
+      />
+      <label for="totalAmount">TOTAL AMOUNT</label>
+      <div *ngIf="isFieldInvalid('totalAmount')" class="error-message">
+        {{ getErrorMessage('totalAmount') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="number"
+        id="total_discount"
+        placeholder="Enter Discount Amount"
+        formControlName="total_discount"
+      />
+      <label for="total_discount">DISCOUNT</label>
+      <div *ngIf="isFieldInvalid('total_discount')" class="error-message">
+        {{ getErrorMessage('total_discount') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        id="client_email"
+        placeholder="Enter Email"
+        formControlName="client_email"
+      />
+      <label for="client_email">EMAIL</label>
+      <div *ngIf="isFieldInvalid('client_email')" class="error-message">
+        {{ getErrorMessage('client_email') }}
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="ClientRegisterData.invalid">Register Client</button>
+  </form>
+</div> -->
+
+
+
+<div class="register-container">
+  <div class="back-arrow" (click)="goBack()">
+    <svg viewBox="0 0 24 24" width="24" height="24">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+  </div>
+  
+  <h1>Register New Client</h1>
+  
+  <form [formGroup]="ClientRegisterData" (ngSubmit)="onSubmitReactiveForm()">
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" id="client_name" maxlength="25" placeholder="Enter Client Name" formControlName="client_name" />
+        <label for="client_name">CLIENT NAME</label>
+        <div *ngIf="isFieldInvalid('client_name')" class="error-message">
+          {{ getErrorMessage('client_name') }}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <input type="text" id="mobile_number" maxlength="10" placeholder="Enter Mobile Number" formControlName="mobile_number" />
+        <label for="mobile_number">MOBILE NUMBER</label>
+        <div *ngIf="isFieldInvalid('mobile_number')" class="error-message">
+          {{ getErrorMessage('mobile_number') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="address" placeholder="Enter Address" formControlName="address" maxlength="100" />
+      <label for="client_address">ADDRESS</label>
+      <div *ngIf="isFieldInvalid('address')" class="error-message">
+        {{ getErrorMessage('address') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="projectDetails" placeholder="Enter Project Details" formControlName="projectDetails" />
+      <label for="projectDetails">PROJECT NAME</label>
+      <div *ngIf="isFieldInvalid('projectDetails')" class="error-message">
+        {{ getErrorMessage('projectDetails') }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <input type="date" id="timeline" formControlName="startDate" />
+        <label for="totalAmount">START DATE</label>
+        <div *ngIf="isFieldInvalid('startDate')" class="error-message">
+          {{ getErrorMessage('startDate') }}
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="date" id="timeline" formControlName="timeline" [min]="currentDate" />
+        <label for="timeline">DUE DATE</label>
+        <div *ngIf="isFieldInvalid('timeline')" class="error-message">
+          {{ getErrorMessage('timeline') }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="number" id="totalAmount" placeholder="Enter Amount" formControlName="totalAmount" />
+      <label for="totalAmount">TOTAL AMOUNT</label>
+      <div *ngIf="isFieldInvalid('totalAmount')" class="error-message">
+        {{ getErrorMessage('totalAmount') }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <input type="number" id="total_discount" placeholder="Enter Discount Amount" formControlName="total_discount" />
+        <label for="total_discount">DISCOUNT</label>
+      </div>
+      
+      <div class="form-group">
+        <input type="text" id="client_email" placeholder="Enter Email" formControlName="client_email" />
+        <label for="client_email">EMAIL</label>
+        <div *ngIf="isFieldInvalid('client_email')" class="error-message">
+          {{ getErrorMessage('client_email') }}
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="ClientRegisterData.invalid">Register Client</button>
+  </form>
+</div>

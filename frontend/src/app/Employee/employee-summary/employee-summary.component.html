@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Summary</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="back-arrow" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  <div class="employee-summary-container">
+    <h2>Summary For {{employeeName}}</h2>
+    <form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="date">Select Month</label>
+          <input type="month" id="date" formControlName="date" required>
+          <p>Select any date from the month you want to see summary.</p>
+        </div>
+        <div class="submit-btn">
+          <button type="submit" [disabled]="summaryForm.invalid">
+            <i class="fas fa-file-alt"></i>
+            Get Summary
+          </button>
+        </div>
+      </form>
+    <div *ngIf="employeeSummary" class="summary-details">
+      <div class="employee-card">
+        <div class="employee-header">
+          <div class="avatar">{{ employeeSummary.employee_name.charAt(0) }}</div>
+          <div class="employee-info">
+            <h4>{{ employeeSummary.employee_name }}</h4>
+            <p>ID: {{ employeeSummary.employee_id }}</p>
+          </div>
+        </div>
+        <div class="employee-body">
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <p>{{ employeeSummary.employee_email }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <p>{{ employeeSummary.employee_mobile }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-money-bill-wave"></i>
+            <p>Total Salary: {{ employeeSummary.total_salary }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-minus-circle"></i>
+            <p>Leave Deduction: {{ employeeSummary.deduction }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-hand-holding-usd"></i>
+            <p>Advance Amount: {{ employeeSummary.advance_amount }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-umbrella-beach"></i>
+            <p>Total Leave: {{ employeeSummary.total_leave }}</p>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-taxi"></i>
+            <p>Total Fare: {{ employeeSummary.total_fare }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Salary Slip</title>
+</head>
+<body>
+<div class="salary-slip">
+  <div class="header">
+    <img src="images/image.png" alt="Company Logo" class="watermark">
+    <h1 class="company-name">
+      <img src="images/image.png" alt="Company Logo" style="height: 25px; width: 30px; margin: 4px; size: 20px;">
+    </h1>
+    <h1>Musketeers Tech (Private) Limited</h1>
+    <p>20-B, Hali Road, Gulberg-II, Lahore - 54660</p>
+    <h2>Salary Slip</h2>
+  
+  
+    <div class="tables-container">
+        <div class="table">
+          <table>
+            <tr>
+              <td class="colored-column">Employee ID</td>
+              <td>MUSK-22-00033</td>
+              <td class="colored-column">Working days in current month</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td class="colored-column">Employee Name</td>
+              <td>Muzamil Shakir</td>
+              <td class="colored-column">Required working Hours/Days</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="colored-column">Designation</td>
+              <td>CEO</td>
+              <td class="colored-column">Total Days/Hours logged on HubStaff</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="colored-column">Date of Joining</td>
+              <td></td>
+              <td class="colored-column">Hours worked in current month before Salary change</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td class="colored-column">Date of Job Confirmation</td>
+              <td></td>
+              <td class="colored-column">Paid leave(Hrs/Days) Offered by Company</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="colored-column">Old Salary (Rs.)</td>
+              <td>500000</td>
+              <td class="colored-column">Hourly Rate (Rs.) before Salary Change</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="colored-column">New Salary (Rs.)</td>
+              <td>700000</td>
+              <td class="colored-column">Hourly Rate (Rs.) after Salary Change</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="table">
+          <table>
+            <tr>
+              <th class="earning-heading" colspan="2">Earnings</th>
+              <th class="deduction-heading" colspan="2">Deductions</th>
+            </tr>
+            <tr>
+              <td class="earning-section">Basic Salary (Rs.)</td>
+              <td class="earning-section">500000</td>
+              <td class="deduction-section">Income Tax (Rs.)</td>
+              <td class="deduction-section">20000</td>
+            </tr>
+            <tr>
+              <td class="earning-section">Medical Allowance (Rs.)</td>
+              <td class="earning-section"></td>
+              <td class="deduction-section"></td>
+              <td class="deduction-section"></td>
+            </tr>
+            <tr>
+              <td class="earning-section">General Allowance (Rs.)</td>
+              <td class="earning-section"></td>
+              <td class="deduction-section"></td>
+              <td class="deduction-section"></td>
+            </tr>
+            <tr>
+              <td class="earning-section">Overtime (Rs.)</td>
+              <td class="earning-section"></td>
+              <td class="deduction-section"></td>
+              <td class="deduction-section"></td>
+            </tr>
+            <tr>
+              <td class="earning-section">Annual Dinner Travelling Expense Reimbursement</td>
+              <td class="earning-section"></td>
+              <td class="deduction-section"></td>
+              <td class="deduction-section"></td>
+            </tr>
+            <tr>
+              <td class="earning-section">Gross Salary (Rs.)</td>
+              <td class="earning-section">600000</td>
+              <td class="deduction-section">Total Deduction (Rs.)</td>
+              <td class="deduction-section">20000</td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="table">
+          <table>
+            <tr>
+              <td class="column1">Net Salary Payable (Rs.)</td>
+              <td class="column2">100000</td>
+            </tr>
+            <tr>
+              <td class="column1">Amount in words</td>
+              <td class="column2">none</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+</div>
+<span> This is computer generated receipt which does not require any signature or Company's stamp in order to considered valid.</span>
+</div>
+
+
+  <p class="total">Net Salary Payable: 100000</p>
+  <p class="total">In Words: only in numbers 
+  </p>
+</body>
+</html> -->

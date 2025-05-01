@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+
+  <div (click)="bakcToHome()" class="back-button-container">
+    <a class="back-button">
+      <i class="fas fa-chevron-left"></i>
+      <span>Back to Home</span>
+    </a>
+  </div>
+  <body>
+    <div class="container">
+      <h2 class="title">Employee Management</h2>
+      <div class="add-employee-container">
+        <button class="add-employee-btn" (click)="showAddDialog()">
+          <span>Add New Employee</span>
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+      <div class="employee-list">
+        <div *ngIf="employees.length === 0" class="no-employees">
+          <p>No employees found.</p>
+        </div>
+        <div class="employee-card" *ngFor="let employee of employees">
+          <div class="employee-info">
+            <h3>{{ employee.name }}</h3>
+            <p><i class="fas fa-envelope"></i> {{ employee.email }}</p>
+            <p><i class="fas fa-phone"></i> {{ employee.phone }}</p>
+            <p>
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              {{ employee.baseSalary }}
+            </p>
+            <p><i class="fas fa-calendar-alt"></i> {{ employee.joiningDate | date:'mediumDate' }}</p>
+          </div>
+          <div class="employee-actions">
+            <button (click)="editEmployee(employee)" class="btn-edit">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button
+              (click)="deleteEmployee(employee.employee_id)"
+              class="btn-delete-icon"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <div class="dropdown">
+              <button class="btn-more" (click)="toggleDropdown(employee)">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div
+                class="dropdown-content"
+                [class.show]="employee.showDropdown"
+              >
+                <button class="dropdown-item" (click)="addLeaves(employee)">
+                  <i class="fas fa-calendar-plus"></i> Add Leaves
+                </button>
+                <button
+                  class="dropdown-item"
+                  (click)="addAdvance(employee)"
+                >
+                  <i class="fas fa-money-check-alt"></i> Add Advance
+                </button>
+                <button
+                  class="dropdown-item"
+                  (click)="goToEmployeeSummary(employee)"
+                >
+                  <i class="fas fa-chart-bar"></i>
+                  Summary
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast for notifications -->
+      <p-toast></p-toast>
+
+      <!-- Dialog for Add/Edit Employee -->
+      <p-dialog
+        [header]="isEditing ? 'Edit Employee' : 'Add New Employee'"
+        [(visible)]="displayDialog"
+        [style]="{ width: '50vw' }"
+        [modal]="true"
+      >
+        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="name">Name</label>
+              <input id="name" type="text" pInputText formControlName="name" />
+              <small
+                class="p-error"
+                *ngIf="
+                  getFormControl('name')?.invalid &&
+                  getFormControl('name')?.touched
+                "
+              >
+                {{ getErrorMessage("name") }}
+              </small>
+            </div>
+            <div class="p-field">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                pInputText
+                formControlName="email"
+              />
+              <small
+                class="p-error"
+                *ngIf="
+                  getFormControl('email')?.invalid &&
+                  getFormControl('email')?.touched
+                "
+              >
+                {{ getErrorMessage("email") }}
+              </small>
+            </div>
+            <div class="p-field">
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" pInputText formControlName="phone" />
+              <small
+                class="p-error"
+                *ngIf="
+                  getFormControl('phone')?.invalid &&
+                  getFormControl('phone')?.touched
+                "
+              >
+                {{ getErrorMessage("phone") }}
+              </small>
+            </div>
+            <div class="p-field">
+              <label for="name">Date of Joining</label>
+              <input id="name" type="date" pInputText formControlName="joiningDate" />
+              <small
+                class="p-error"
+                *ngIf="
+                  getFormControl('joiningDate')?.invalid &&
+                  getFormControl('joiningDate')?.touched
+                "
+              >
+                {{ getErrorMessage("joiningDate") }}
+              </small>
+            </div>
+            <div class="p-field">
+              <label for="baseSalary">Base Salary</label>
+              <p-inputNumber
+                id="baseSalary"
+                formControlName="baseSalary"
+              ></p-inputNumber>
+              <small
+                class="p-error"
+                *ngIf="
+                  getFormControl('baseSalary')?.invalid &&
+                  getFormControl('baseSalary')?.touched
+                "
+              >
+                {{ getErrorMessage("baseSalary") }}
+              </small>
+            </div>
+          </div>
+        </form>
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            type="button"
+            label="Cancel"
+            icon="pi pi-times"
+            (click)="hideDialog()"
+            class="p-button-text"
+          ></button>
+          <button
+            pButton
+            type="button"
+            [label]="isEditing ? 'Save' : 'Add'"
+            icon="pi pi-check"
+            (click)="onSubmit()"
+            [disabled]="employeeForm.invalid"
+          ></button>
+        </ng-template>
+      </p-dialog>
+    </div>
+  </body>
+</html>
+
+<div class="custom-alert" *ngIf="showDeleteAlert">
+  <div class="alert-content">
+    <h3>Confirm Deletion</h3>
+    <p>Are you sure you want to delete this employee?</p>
+    <div class="alert-actions">
+      <button class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button class="btn-delete-alert" (click)="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!--  for the  add dialouge for add leaves for employees -->
+
+<p-dialog
+  [(visible)]="displayLeaveDialog"
+  [modal]="true"
+  [style]="{ width: '70rem' }"
+  [baseZIndex]="10000"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="true"
+  styleClass="cool-dialog"
+>
+  <ng-template pTemplate="header">
+    <h2>Add Leaves for {{ currentEmployee?.name }}</h2>
+  </ng-template>
+
+  <form
+    [formGroup]="leaveForm"
+    (ngSubmit)="onSubmitLeaves()"
+    class="leave-form"
+  >
+    <div class="form-group">
+      <label for="leaveDate">Leave Date</label>
+      <input
+        id="leaveDate"
+        type="date"
+        formControlName="leaveDate"
+        pInputText
+      />
+    </div>
+    <div class="form-group">
+      <label for="leaveType">Leave Type</label>
+      <select id="leaveType" formControlName="leaveType" pInputText>
+        <option value="Full Day">Full Day</option>
+        <option value="Half Day">Half Day</option>
+      </select>
+    </div>
+    <div class="button-group">
+      <button
+        pButton
+        type="submit"
+        label="Add Leave"
+        icon="pi pi-plus"
+        class="p-button-rounded p-button-success"
+      ></button>
+    </div>
+  </form>
+
+  <div class="leaves-list">
+    <h3>Added Leaves:</h3>
+    <ul>
+      <li *ngFor="let leave of leaves; let i = index">
+        {{ leave.leaveDate | date }} - {{ leave.leaveType }}
+        <button class="btn-delete-icon">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      icon="pi pi-times"
+      (click)="displayLeaveDialog = false"
+      class="p-button-rounded p-button-secondary"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="calculate salary"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem' }"
+>
+  <div class="form-container">
+    <form [formGroup]="salaryForm" (ngSubmit)="onSubmitSalary()">
+      <div class="form-group">
+        <label for="month">Select month</label>
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          class="form-control"
+        />
+        <p>select the 1st date of the month you need to calculate salary</p>
+      </div>
+      <div class="button-group">
+        <button type="submit" class="submit-button">Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-dialog
+header="Add Advance for Employee"
+[modal]="true"
+[(visible)]="displayAdvanceDialouge"
+[style]="{ width: '25rem' }"
+>
+  <form [formGroup]="addAdvanceForm" (ngSubmit)="addAdvanceForEmployees()" class="advance-form">
+    <div class="form-group">
+      <label for="month">Month</label>
+      <input id="month" formControlName="month" type="date" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="advanceAmount">Advance Amount</label>
+      <input id="advanceAmount" formControlName="advanceAmount" type="number" class="form-control"/>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="addAdvanceForm.invalid">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="displayAdvanceDialouge = false">Cancel</button>
+    </div>
+  </form>
+</p-dialog>

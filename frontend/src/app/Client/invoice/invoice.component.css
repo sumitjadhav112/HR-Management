@@ -1,0 +1,272 @@
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.3;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.invoice-container {
+  width: 100%;
+  max-width: 210mm;
+  padding: 10mm;
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid rgb(130, 129, 129);
+  margin: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.company-info, .invoice-info {
+  flex: 1 1 300px;
+  margin-bottom: 10px;
+}
+
+.company-info p, .invoice-info p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.logo {
+  max-width: 120px;
+  height: auto;
+}
+
+.invoice-info {
+  text-align: right;
+}
+
+.invoice-info h1 {
+  color: #ff6600;
+  margin: 0 0 5px 0;
+  font-size: 18pt;
+}
+
+.client-info, .project-details {
+  background-color: #f9f9f9;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.client-info h2, .project-details h2 {
+  margin: 0 0 5px 0;
+  font-size: 12pt;
+  color: #ff6600;
+}
+
+.client-info p, .project-details p {
+  margin: 0;
+}
+
+.project-details {
+  background-color: #f0f8ff;
+  border-color: #b0d4ff;
+}
+
+.project-details h2 {
+  color: #0066cc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  font-size: 9pt;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: left;
+}
+
+th {
+  background-color: #ff6600;
+  color: white;
+}
+
+.total-row {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.payment-installments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.payment-method, .installments {
+  flex: 1 1 300px;
+  margin-bottom: 10px;
+}
+
+.payment-method h2, .installments h2 {
+  font-size: 12pt;
+  margin: 0 0 5px 0;
+  color: #ff6600;
+}
+
+.payment-method p, .installments p {
+  margin: 0;
+}
+
+.invoice-footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  font-size: 8pt;
+}
+
+.terms-conditions {
+  flex: 1 1 300px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+}
+
+.terms-conditions h2 {
+  font-size: 11pt;
+  margin: 0 0 5px 0;
+  color: #ff6600;
+}
+
+.terms-conditions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.signature-block {
+  text-align: right;
+  flex: 1 1 300px;
+}
+
+.home-btn, .download-btn {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.home-btn {
+  top: 20px;
+  left: 20px;
+  background-color: #3498db;
+}
+
+.download-btn {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2ecc71;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.home-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-btn:hover {
+  background-color: #2980b9;
+}
+
+.download-btn:hover {
+  background-color: #27ae60;
+}
+
+.home-icon, .download-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .home-btn, .download-btn {
+    display: none;
+  }
+
+  .invoice-container {
+    margin: 0;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .invoice-container {
+    margin: 10px;
+    padding: 5mm;
+  }
+  
+  .home-btn, .download-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .home-icon, .download-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .invoice-info h1 {
+    font-size: 16pt;
+  }
+
+  .client-info h2, .project-details h2, .payment-method h2, .installments h2, .terms-conditions h2 {
+    font-size: 11pt;
+  }
+
+  table {
+    font-size: 8pt;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+}

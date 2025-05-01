@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.register-container {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 30px;
+  flex: 1;
+}
+
+input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #333;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+input::placeholder {
+  color: transparent;
+}
+
+label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-size: 16px;
+  color: #999;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: #4a90e2;
+}
+
+input:focus {
+  border-bottom: 2px solid #4a90e2;
+}
+
+.error-message {
+  color: #ff3860;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+button:hover {
+  background: #3a7bd5;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+  cursor: pointer;
+}
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4a90e2;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.back-arrow:hover {
+  background-color: #3a7bd5;
+  transform: scale(1.1);
+}
+
+.back-arrow svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.back-arrow:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 30px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  input, button {
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  .back-arrow {
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .back-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+}

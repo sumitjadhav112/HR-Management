@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <button class="back-btn" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i>
+</button>
+    <div class="revenue-dashboard">
+        <header class="dashboard-header">
+            <h1>Revenue Dashboard</h1>
+            <button class="add-revenue-btn" (click)="openAddRevenueModal()">
+                <i class="fas fa-plus"></i> Add New Revenue
+            </button>
+        </header>
+        <div class="revenue-stats">
+            <div class="stat-card total-revenue">
+                <h3>Total Revenue</h3>
+                <p>{{getTotalRevenue() | currency:'INR':'symbol':'1.2-2'}}</p>
+            </div>
+            <div class="stat-card avg-revenue">
+                <h3>Average Revenue</h3>
+                <p>{{getAverageRevenue() | currency:'INR':'symbol':'1.2-2'}}</p>
+            </div>
+        </div>
+        <div class="revenue-list">
+            <div class="revenue-item" *ngFor="let revenue of revenueArray; let i = index" [ngStyle]="{'animation-delay': i * 0.1 + 's'}">
+                <div class="revenue-icon" [style.background-color]="revenueColors[i]">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="revenue-details">
+                    <h2>{{revenue.amount | currency:'INR':'symbol':'1.2-2'}}</h2>
+                    <p class="revenue-date">{{revenue.date | date:'mediumDate'}}</p>
+                    <p class="revenue-description">{{revenue.description}}</p>
+                </div>
+                <div class="revenue-actions">
+                    <button class="edit-btn"  (click)="openEditRevenueModal(revenue)"><i class="fas fa-edit"></i></button>
+                    <button class="delete-btn" (click)="openDeleteConfirmation(revenue)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-toast></p-toast>
+
+
+    
+
+
+    <!-- for ading new revenue model -->
+    <p-dialog header="Add New Revenue" [(visible)]="displayAddRevenueModal" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="p-field">
+                <label for="amount">Amount</label>
+                <p-inputNumber id="amount" [(ngModel)]="newRevenue.amount" mode="currency" currency="INR" locale="en-IN"></p-inputNumber>
+            </div>
+            <div class="p-field">
+                <label for="date">Date</label>
+                <input  type="date" class="dialouge-date" [(ngModel)]="newRevenue.date" dateFormat="yy-mm-dd">
+            </div>
+            <div class="p-field">
+                <label for="description">Description</label>
+                <input class="dialouge-date" type="text" id="description"[(ngModel)]="newRevenue.description">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="closeAddRevenueModal()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveNewRevenue()"></button>
+        </ng-template>
+    </p-dialog>
+
+
+    <!-- Edit Revenue Modal -->
+<p-dialog header="Edit Revenue" [(visible)]="displayEditRevenueModal" [style]="{width: '50vw'}" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="editAmount">Amount</label>
+        <p-inputNumber id="editAmount" [(ngModel)]="editingRevenue.amount" mode="currency" currency="INR" locale="en-IN"></p-inputNumber>
+      </div>
+      <div class="p-field">
+        <label for="editDate">Date</label>
+        <input type="date" class="dialouge-date" [(ngModel)]="editingRevenue.date" dateFormat="yy-mm-dd">
+      </div>
+      <div class="p-field">
+        <label for="editDescription">Description</label>
+        <input class="dialouge-date" type="text" id="editDescription" [(ngModel)]="editingRevenue.description">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="closeEditRevenueModal()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEditedRevenue()"></button>
+    </ng-template>
+  </p-dialog>
+
+  <div class="delete-modal" *ngIf="displayDeleteModal">
+    <div class="delete-modal-content">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete this revenue entry?</p>
+      <div class="delete-modal-details">
+        <p><strong>Amount:</strong> {{deletingRevenue.amount | currency:'INR':'symbol':'1.2-2'}}</p>
+        <p><strong>Date:</strong> {{deletingRevenue.date | date:'mediumDate'}}</p>
+        <p><strong>Description:</strong> {{deletingRevenue.description}}</p>
+      </div>
+      <div class="delete-modal-actions">
+        <button class="cancel-btn" (click)="closeDeleteModal()">Cancel</button>
+        <button class="confirm-btn" (click)="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

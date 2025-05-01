@@ -1,0 +1,268 @@
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --background-color: #f5f7fa;
+  --card-background: #ffffff;
+  --text-color: #34495e;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+.expense-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+.back-button {
+  font-size: 1.5em;
+  color: var(--primary-color);
+  cursor: pointer;
+  margin-right: 20px;
+
+  top: 54px;
+  position: absolute;
+}
+.back-button:hover {
+  color: var(--secondary-color);
+}
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back-button {
+    margin-bottom: 10px;
+  }
+  .dashboard-title {
+    text-align: left;
+  }
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 2.5em;
+  color: var(--primary-color);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.no-expenses-message {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--card-background);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.no-expenses-message p {
+  font-size: 1.2em;
+  color: var(--text-color);
+}
+
+.expense-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.expense-card {
+  background-color: var(--card-background);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px var(--shadow-color);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgb(120, 117, 117);
+}
+
+.expense-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px var(--shadow-color);
+}
+.expense-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2em;
+  opacity: 0.2;
+}
+
+.expense-details {
+  padding: 30px 20px 20px 70px;
+}
+
+.expense-type {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.expense-amount {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.expense-date {
+  font-size: 0.9em;
+  color: #95a5a6;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+.edit-icon {
+  font-size: 1.2em;
+}
+
+/* Color coding and icons for expense types */
+.expense-card[data-type="Food"] {
+  border-top: 4px solid #e74c3c;
+}
+.expense-card[data-type="Transport"] {
+  border-top: 4px solid #3498db;
+}
+.expense-card[data-type="Entertainment"] {
+  border-top: 4px solid #f39c12;
+}
+.expense-card[data-type="Utilities"] {
+  border-top: 4px solid #9b59b6;
+}
+.expense-card[data-type="Other"] {
+  border-top: 4px solid #1abc9c;
+}
+
+.icon-food::before {
+  content: "🍔";
+}
+.icon-transport::before {
+  content: "🚗";
+}
+.icon-entertainment::before {
+  content: "🎬";
+}
+.icon-utilities::before {
+  content: "💡";
+}
+.icon-other::before {
+  content: "📦";
+}
+
+@media (max-width: 768px) {
+  .expense-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----------------------for dialouge as edit */
+/* General dialog styles */
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 2rem;
+}
+
+:host ::ng-deep .p-dialog .p-field {
+  margin-bottom: 1.5rem;
+}
+
+:host ::ng-deep .p-dialog label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Ensure all input fields have consistent width */
+:host ::ng-deep .p-dialog .p-inputtext,
+:host ::ng-deep .p-dialog .p-inputnumber,
+:host ::ng-deep .p-dialog .custom-date-input,
+:host ::ng-deep .p-dialog input[type="text"] {
+  width: 100%;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1rem 2rem;
+  text-align: right;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer button {
+  margin-left: 0.5rem;
+}
+
+:host ::ng-deep .p-dialog .p-button {
+  min-width: 6rem;
+}
+
+/* Style for all input fields, including type */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep input[type="text"],
+.custom-date-input,
+:host ::ng-deep .p-inputnumber .p-inputtext {
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  font-size: 1rem;
+  color: #495057;
+  background-color: #ffffff;
+}
+
+:host ::ng-deep .p-inputtext:enabled:focus,
+:host ::ng-deep input[type="text"]:focus,
+.custom-date-input:focus,
+:host ::ng-deep .p-inputnumber .p-inputtext:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #bfdbfe;
+  border-color: #3b82f6;
+}
+.custom-date-input {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.custom-date-input::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0.54);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  transition: color 0.2s;
+}
+.custom-date-input::-webkit-calendar-picker-indicator:hover {
+  color: #3b82f6;
+}
+:host ::ng-deep .p-inputtext:enabled:hover,
+:host ::ng-deep input[type="text"]:hover,
+.custom-date-input:hover,
+:host ::ng-deep .p-inputnumber .p-inputtext:hover {
+  border-color: #3b82f6;
+}
+
+@media screen and (max-width: 640px) {
+  :host ::ng-deep .p-dialog {
+    width: 90% !important;
+  }
+}

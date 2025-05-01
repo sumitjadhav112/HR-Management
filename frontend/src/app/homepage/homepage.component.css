@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f0f2f5;
+}
+
+.admin-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.header {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50;
+  font-size: 3em;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 10px; 
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1200px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  width: 280px;
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.card-content {
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 0.9;
+}
+
+.card:hover .card-content {
+  transform: translateY(-10px);
+}
+
+.card .icon {
+  font-size: 3em;
+  color: #3498db;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.card:hover .icon {
+  color: white;
+  transform: scale(1.1);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+}
+
+.card p {
+  color: #7f8c8d;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.card:hover h2, .card:hover p {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+    max-width: 280px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+
+/* ------------------for logout button------------------ */
+
+.logout-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ----------------- for confirm message alert -------------- */
+
+
+/* Custom Confirm Alert Styles */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+} 
+
+.confirm-dialog {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.confirm-dialog h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.confirm-dialog p {
+  color: #7f8c8d;
+  margin-bottom: 25px;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confirm-btn, .cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #c0392b;
+}
+
+.cancel-btn {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+.cancel-btn:hover {
+  background-color: #bdc3c7;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+/* -----------------notification --------------------- */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.notification-icon {
+  position: relative;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.notification-icon:hover {
+  color: #3498db;
+}
+
+
+@keyframes ring {
+  0% { transform: rotate(0); }
+  1% { transform: rotate(30deg); }
+  3% { transform: rotate(-28deg); }
+  5% { transform: rotate(34deg); }
+  7% { transform: rotate(-32deg); }
+  9% { transform: rotate(30deg); }
+  11% { transform: rotate(-28deg); }
+  13% { transform: rotate(26deg); }
+  15% { transform: rotate(-24deg); }
+  17% { transform: rotate(22deg); }
+  19% { transform: rotate(-20deg); }
+  21% { transform: rotate(18deg); }
+  23% { transform: rotate(-16deg); }
+  25% { transform: rotate(14deg); }
+  27% { transform: rotate(-12deg); }
+  29% { transform: rotate(10deg); }
+  31% { transform: rotate(-8deg); }
+  33% { transform: rotate(6deg); }
+  35% { transform: rotate(-4deg); }
+  37% { transform: rotate(2deg); }
+  39% { transform: rotate(-1deg); }
+  41% { transform: rotate(1deg); }
+  43% { transform: rotate(0); }
+  100% { transform: rotate(0); }
+}
+
+.notification-icon.has-unread {
+  animation: ring 2s ease;
+  transform-origin: 50% 0;
+  animation-iteration-count: 1;
+}
+
+.notification-icon.has-unread:hover {
+  animation: none;
+}
+
+
+
+
+
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Adjust the logout button styles */
+.logout-btn {
+  position: static;
+  /* Remove top and right properties */
+}
+
+/* Rest of your CSS remains the same */

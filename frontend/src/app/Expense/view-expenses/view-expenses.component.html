@@ -1,0 +1,46 @@
+<div class="expense-dashboard">
+  <h1 class="dashboard-title">Expense Dashboard</h1>
+  <i class="fas fa-arrow-left back-button" (click)="goBack()"></i>
+  <div *ngIf="expenseArray && expenseArray.length > 0; else noExpenses" class="expense-grid">
+    <div *ngFor="let expense of expenseArray" class="expense-card" [attr.data-type]="expense.type">
+      <div class="expense-icon"></div>
+      <div class="expense-details">
+        <h2 class="expense-type">{{ expense.type }}</h2>
+        <p class="expense-amount">₹{{ expense.amount | number: '1.2-2' }}</p>
+        <p class="expense-date">{{ expense.date | date: 'mediumDate' }}</p>
+      </div>
+      <button class="edit-button" (click)="editExpense(expense)">
+        <span class="edit-icon">✎</span>
+      </button>
+    </div>
+  </div>
+  <ng-template #noExpenses>
+    <div class="no-expenses-message">
+      <p>No expenses found. Add some expenses to get started!</p>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Rest of your code remains the same -->
+
+<p-dialog [(visible)]="displayDialog" [style]="{width: '450px'}" header="Edit Expense" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="type">Type</label>
+      <input pInputText id="type" [(ngModel)]="selectedExpense.type" required autofocus />
+    </div>
+    <div class="p-field">
+      <label for="amount">Amount</label>
+      <p-inputNumber id="amount" [(ngModel)]="selectedExpense.amount" mode="currency" currency="INR" locale="en-IN"></p-inputNumber>
+    </div>
+    <div class="p-field">
+      <label for="date">Date</label>
+      <input type="date" id="date" [(ngModel)]="selectedExpense.date" class="custom-date-input">
+    </div>
+  </ng-template>
+ 
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="onCancel()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="onSave()"></button>
+  </ng-template>
+</p-dialog>

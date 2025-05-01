@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="notifications-container">
+        <button class="back-button" (click)="navigateToHome()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+        <h2>Notifications</h2>
+        <ul class="notification-list">
+          <li *ngFor="let notification of notificationArray; let i = index" 
+              class="notification-item"
+              [class.unread]="!notification.read">
+            <div class="notification-icon" [ngClass]="getIconClass(notification.type)">
+              <i class="fas" [ngClass]="getIconName(notification.type)"></i>
+            </div>
+            <div class="notification-content">
+              <h3>{{ notification.client.client_name }}</h3>
+              <p>{{ notification.message }}</p>
+              <div class="notification-footer">
+                <span class="notification-time">{{ notification.time | date : "short" }}</span>
+                <button pButton type="button" 
+                        label="View Details" 
+                        class="p-button-text" (click)="viewed(notification)"
+                        (click)="showDetails(notification.client)"></button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    <p-dialog
+    header="Client Details"
+    [(visible)]="displayDialog"
+    [style]="{ width: '50vw', maxWidth: '600px' }"
+    [modal]="true"
+    [closeOnEscape]="true"
+    [showHeader]="true"
+    styleClass="custom-dialog"
+  >
+    <div *ngIf="selectedClient" class="client-details">
+      <div class="detail-row">
+        <span class="label">Name:</span>
+        <span class="value">{{ selectedClient.client_name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Email:</span>
+        <span class="value">{{ selectedClient.clinet_email }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Mobile number:</span>
+        <span class="value">{{ selectedClient.mobile_number }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Project Details:</span>
+        <span class="value">{{ selectedClient.projectDetails }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Time Line:</span>
+        <span class="value">{{ selectedClient.timeline }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Total Amount:</span>
+        <span class="value">{{ selectedClient.totalAmount | currency }}</span>
+      </div>
+    </div>
+  </p-dialog>
+  </body>
+</html>

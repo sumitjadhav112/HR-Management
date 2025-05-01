@@ -1,0 +1,77 @@
+
+<div class="installment-container">
+  <header class="header">
+    <h1 class="title">Add Installments</h1>
+    <p class="client-name">CLient Name :{{ clientName || 'Loading...' }}</p>
+    <p class="total-amount">Discounted price: ₹{{ amountAfterDiscount }}</p>
+  </header>
+
+  <form [formGroup]="installmentForm" class="installment-form">
+    <div *ngFor="let installment of installments; let i = index" class="installment-group">
+      <h2 class="installment-title">Installment {{ i + 1 }}</h2>
+      <div class="form-group">
+        <label [for]="'amount' + i">Amount:</label>
+        <div class="input-wrapper">
+          <span class="currency-symbol">₹</span>
+          <input
+            type="number" 
+            [id]="'amount' + i"
+            [formControlName]="'amount' + i"
+            placeholder="Enter amount"
+          > 
+        </div>
+        <div *ngIf="installmentForm.get('amount' + i)?.invalid && installmentForm.get('amount' + i)?.touched" class="error-message">
+          Amount is required and must be greater than 0.
+        </div>
+      </div>
+      <div class="form-group">
+        <label [for]="'dueDate' + i">Due Date:</label>
+        <input
+          type="date"
+          [id]="'dueDate' + i"
+          [formControlName]="'dueDate' + i"
+        >
+        <div *ngIf="installmentForm.get('dueDate' + i)?.invalid && installmentForm.get('dueDate' + i)?.touched" class="error-message">
+          Due date is required and must be in the future.
+        </div>
+      </div>
+      <button
+        type="button"
+        (click)="submitInstallment(i)"
+        [disabled]="installmentForm.get('amount' + i)?.invalid || installmentForm.get('dueDate' + i)?.invalid"
+        class="btn btn-primary"
+      >
+        Submit Installment
+      </button>
+    </div>
+    
+    <button
+      type="button"
+      (click)="addInstallment()"
+      [disabled]="!isInstallmentSubmitted[installments.length - 1]"
+      *ngIf="installments.length < 3"
+      class="btn btn-secondary"
+    >
+      Add Another Installment
+    </button>
+    
+    <div *ngIf="installments.length === 3" class="invoice-buttons">
+      <button
+        type="button"
+        (click)="generateInvoice()"
+        class="btn btn-success"
+      >
+        Generate Invoice
+      </button>
+      <button
+        type="button"
+        (click)="viewInvoiceForClient()"
+        class="btn btn-info"
+        [disabled]="!invoiceGenerated"
+      >
+        View Invoice
+      </button>
+    </div>
+  </form>
+</div>
+
